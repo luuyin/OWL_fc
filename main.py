@@ -5,7 +5,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM,LlamaTokenizer
 # from importlib.metadata import version
 from collections import defaultdict
-from lib.prune_all import prune_wanda_outlier_structure_special,prune_wanda_outlier_structure,prune_sparsegpt_outlier,prune_wanda_outlier,prune_mag_outlier, prune_wanda,prune_magnitude,prune_sparsegpt, check_sparsity, find_layers
+from lib.prune_all import prune_wanda_outlier_fc,prune_wanda_outlier_structure_special,prune_wanda_outlier_structure,prune_sparsegpt_outlier,prune_wanda_outlier,prune_mag_outlier, prune_wanda,prune_magnitude,prune_sparsegpt, check_sparsity, find_layers
 from lib.eval import eval_ppl
 import sys
 print('# of gpus: ', torch.cuda.device_count())
@@ -344,8 +344,6 @@ def main():
 
 
 
-
-
     elif args.prune_method == "sparsegpt":
 
 
@@ -356,6 +354,11 @@ def main():
     elif args.prune_method == "wanda_owl":
 
         prune_wanda_outlier(args, model, tokenizer, device, prune_n=prune_n, prune_m=prune_m)
+
+    ############################ owl   ############################
+    elif args.prune_method == "wanda_owl_fc":
+
+        prune_wanda_outlier_fc(args, model, tokenizer, device, prune_n=prune_n, prune_m=prune_m)
 
 
     ############################ owl   ############################
